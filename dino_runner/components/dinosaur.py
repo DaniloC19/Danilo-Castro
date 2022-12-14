@@ -15,7 +15,7 @@ class Dinosaur(Sprite):
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
-        self.step_index = 0
+        self.step_index = 10
         self.dino_run = True
         self.dino_jump = False
         self.jump_speed = self.JUMP_SPEED

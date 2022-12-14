@@ -4,6 +4,8 @@ from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, T
 
 from dino_runner.components.dinosaur import Dinosaur 
 
+from dino_runner.components.obstacles.bird import Bird 
+
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
 class Game:
@@ -18,6 +20,7 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.player = Dinosaur()
+        self.obstacle = Bird()
         self.obstacle_manager = ObstacleManager()
 
     def run(self): 
@@ -36,6 +39,7 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
+        self.obstacle.fly_animation()
         self.obstacle_manager.update(self)
 
     def draw(self):
