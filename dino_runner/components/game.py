@@ -6,6 +6,7 @@ from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.constants import *
 from dino_runner.components.menu import Menu
+from dino_runner.components.scores import Score
 class Game:
     GAME_SPEED = 20
     def __init__(self):
@@ -21,10 +22,9 @@ class Game:
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.running = False
-        self.score = 0
-        self.highest_score = []
         self.death_counter = 0
         self.menu = Menu('Press any key to start', self.screen)
+        self.points = Score()
 
     def execute(self): 
         self.running = True
@@ -36,7 +36,7 @@ class Game:
 
     def run(self):
         self.obstacle_manager.reset_obstacles()
-        self.score = 0
+        self.points.score = 0
         self.game_speed = self.GAME_SPEED
         self.playing = True
         while self.playing:
@@ -53,7 +53,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
-        self.update_score()
+        self.points.update_score(self.game_speed)
         
 
     def draw(self):
@@ -63,7 +63,7 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
-        self.draw_score()
+        self.points.draw_score(self.screen)
         pygame.display.update()
         # pygame.display.flip()
 
@@ -86,37 +86,36 @@ class Game:
             self.menu.draw(self.screen)
         else:
             # self.highest_score.append(self.score)
-            self.menu.update_message(f'Game over. Press any key to restart.',  f'Your Score: {self.score}' ,f'Hignest score: {self.hignest_scores()}',f'Total deaths: {self.death_counter}' )
-            
+            self.menu.update_message(f'Game over. Press any key to restart.',  f'Your Score: {self.points.score}' ,f'Hignest score: {self.points.hignest_scores(self.death_counter)}', f'Total deaths: {self.death_counter}' )
             self.menu.draw(self.screen)
             
         self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
         self.menu.update(self)
 
-    def update_score(self):
-        self.score += 1
+    # def update_score(self):
+    #     self.score += 1
         
-        if self.score % 200 == 0 and self.game_speed < 500:
-            self.game_speed += 5 
+    #     if self.score % 200 == 0 and self.game_speed < 500:
+    #         self.game_speed += 5 
         
 
-    def draw_score(self):
-        font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Score {self.score}', True, (0,0,0))
-        text_rect = text.get_rect()
-        text_rect.center = (1000, 50)
-        self.screen.blit(text, text_rect)
+    # def draw_score(self):
+    #     font = pygame.font.Font(FONT_STYLE, 30)
+    #     text = font.render(f'Score {self.score}', True, (0,0,0))
+    #     text_rect = text.get_rect()
+    #     text_rect.center = (1000, 50)
+    #     self.screen.blit(text, text_rect)
 
-    def hignest_scores(self):
-        flag = True
-        if self.death_counter > 0: 
-            self.highest_score.append(self.score)
-        # while flag:
-        #     flag = False
-        #     for i in range(len(self.highest_score) - 1):
-        #         if self.highest_score[i] > self.highest_score[i + 1]:
-        #             self.highest_score[i], self.highest_score[i + 1] = self.highest_score[i + 1], self.highest_score[i]
-        #             flag = True                   
-        self.highest_score.sort()
-        return self.highest_score[len(self.highest_score) - 1]
+    # def hignest_scores(self):
+    #     flag = True
+    #     if self.death_counter > 0: 
+    #         self.highest_score.append(self.score)
+    #     # while flag:
+    #     #     flag = False
+    #     #     for i in range(len(self.highest_score) - 1):
+    #     #         if self.highest_score[i] > self.highest_score[i + 1]:
+    #     #             self.highest_score[i], self.highest_score[i + 1] = self.highest_score[i + 1], self.highest_score[i]
+    #     #             flag = True                   
+    #     self.highest_score.sort()
+    #     return self.highest_score[len(self.highest_score) - 1]
 
