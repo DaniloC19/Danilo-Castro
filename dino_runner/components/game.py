@@ -42,8 +42,6 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        
-
 
     def events(self):
         for event in pygame.event.get():
@@ -84,13 +82,14 @@ class Game:
         if self.death_counter == 0:
             self.menu.draw(self.screen)
         else:
-            self.menu.update_message('New message')
-            self.draw(self.screen)
+            self.menu.update_message(f'''Game over. Press any key to restart. \n Score:{self.score} \n Hig
+            ''')
+            self.menu.draw(self.screen)
+            
+
 
         self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
         self.menu.update(self)
-
-
 
     def update_score(self):
         self.score += 1
