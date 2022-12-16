@@ -7,7 +7,7 @@ from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.menu import Menu
 from dino_runner.components.counter import Counter
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
-
+from dino_runner.components.clouds import Cloud
 
 class Game:
     GAME_SPEED = 20
@@ -29,6 +29,7 @@ class Game:
         self.death_count = Counter()
         self.highest_score = Counter()
         self.power_up_manager = PowerUpManager()
+        self.cloud = Cloud()
         
     def execute(self):
         self.running = True
@@ -55,6 +56,7 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
+        self.cloud.update(self.game_speed)
         self.power_up_manager.update(self)
         self.obstacle_manager.update(self)
         self.score.update()
@@ -65,6 +67,7 @@ class Game:
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
+        self.cloud.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
         self.draw_power_up_time()
@@ -100,8 +103,8 @@ class Game:
         self.menu.update(self)
                 
     def update_game_speed(self):
-        if self.score.count % 100 == 0 and self.game_speed < 500:
-            self.game_speed += 5
+        if self.score.count % 200 == 0 and self.game_speed < 500:
+            self.game_speed += 4
             
     def update_highest_score(self):
         if self.score.count > self.highest_score.count:

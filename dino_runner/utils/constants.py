@@ -26,6 +26,8 @@ RUNNING_HAMMER = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2.png")),
 ]
 
+DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDead.png"))
+
 JUMPING = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
 JUMPING_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpShield.png"))
 JUMPING_HAMMER = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpHammer.png"))
@@ -74,3 +76,5 @@ DEFAULT_TYPE = "default"
 FONT_STYLE = 'freesansbold.ttf'
 
 SHIELD_TYPE = 'shield'
+
+HAMMER_TYPE = 'hammer'

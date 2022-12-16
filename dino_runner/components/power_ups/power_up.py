@@ -12,7 +12,6 @@ class PowerUp(Sprite):
         self.start_time = 0
         self.width = self.image.get_width()
 
-
     def update(self, game_speed, power_ups):
         self.rect.x -= game_speed
 
