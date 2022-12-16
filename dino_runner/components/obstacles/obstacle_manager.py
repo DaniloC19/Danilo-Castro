@@ -1,19 +1,24 @@
 import pygame
 import random
 
+import os
 from dino_runner.utils.constants import SHIELD_TYPE, HAMMER_TYPE,SMALL_CACTUS
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.bird import Bird
 
 from dino_runner.utils.constants import DINO_DEAD
 
+
 from dino_runner.components.dinosaur import Dinosaur
+IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "..","assets")
+
 
 
 class ObstacleManager:
   def __init__(self):
     self.dino = Dinosaur()
     self.obstacles = []
+    pygame.mixer.music.load(os.path.join(IMG_DIR, "Other/sfx.mp3"))
     
   def generate_obstacle(self, obstacle_type):
     if obstacle_type == 0:
@@ -41,6 +46,8 @@ class ObstacleManager:
         elif game.player.type == HAMMER_TYPE:  
           self.obstacles.pop()
         else:
+          
+          pygame.mixer.music.play()
           self.dino.image = DINO_DEAD
           game.death_count.count += 1
           pygame.time.delay(1000)
